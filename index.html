@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iteniq — IT Consulting, Sourcing & SaaS</title>
+    <meta name="description" content="Peter Petriska — IT líder, consulting, sourcing a B2B SaaS produkty. Bratislava, Slovensko.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #0a0a0f;
+            color: #e8e6e1;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 28px clamp(24px, 5vw, 80px);
+            border-bottom: 1px solid #1a1a22;
+        }
+
+        .nav-logo {
+            font-family: 'Instrument Serif', serif;
+            font-size: 22px;
+            letter-spacing: 0.02em;
+            color: #e8e6e1;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-link {
+            color: #787878;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .nav-link:hover { color: #e8e6e1; }
+
+        /* Shared */
+        .accent-line {
+            width: 40px;
+            height: 1px;
+            background: #c9a96e;
+            display: inline-block;
+            margin-right: 12px;
+            vertical-align: middle;
+        }
+
+        .section-label {
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #787878;
+            margin-bottom: 32px;
+        }
+
+        /* Hero */
+        .hero {
+            padding: clamp(60px, 12vw, 140px) clamp(24px, 5vw, 80px);
+            max-width: 1100px;
+        }
+
+        .hero-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(36px, 7vw, 72px);
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 32px;
+            color: #e8e6e1;
+        }
+
+        .hero-title em {
+            font-style: italic;
+            color: #c9a96e;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(15px, 2vw, 18px);
+            color: #999;
+            line-height: 1.7;
+            max-width: 520px;
+            font-weight: 300;
+        }
+
+        /* About */
+        .about {
+            padding: clamp(60px, 10vw, 120px) clamp(24px, 5vw, 80px);
+            max-width: 1100px;
+        }
+
+        .about-name {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 400;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .about-desc {
+            font-size: 15px;
+            color: #999;
+            line-height: 1.8;
+            max-width: 650px;
+            margin-bottom: 48px;
+            font-weight: 300;
+        }
+
+        /* Expertise cards */
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1px;
+            background: #1a1a22;
+        }
+
+        .expertise-card {
+            background: #0a0a0f;
+            border: 1px solid #1a1a22;
+            padding: 32px;
+            transition: all 0.4s ease;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .expertise-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #c9a96e, transparent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .expertise-card:hover {
+            border-color: #2a2a32;
+            background: #0e0e14;
+        }
+
+        .expertise-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .expertise-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .expertise-desc {
+            font-size: 14px;
+            color: #777;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* Contact */
+        .contact {
+            padding: clamp(60px, 10vw, 120px) clamp(24px, 5vw, 80px);
+            max-width: 1100px;
+        }
+
+        .contact-heading {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 400;
+            margin-bottom: 48px;
+            line-height: 1.2;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 0;
+            border-bottom: 1px solid #1a1a22;
+            text-decoration: none;
+            color: #e8e6e1;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            padding-left: 12px;
+            color: #c9a96e;
+        }
+
+        .contact-link-label {
+            font-size: 13px;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            min-width: 80px;
+        }
+
+        .contact-link-value {
+            font-size: 16px;
+            font-weight: 300;
+        }
+
+        .contact-link-arrow {
+            font-size: 18px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-link:hover .contact-link-arrow {
+            opacity: 1;
+        }
+
+        /* Footer */
+        .footer-wrap {
+            padding: 0 clamp(24px, 5vw, 80px);
+            max-width: 1100px;
+        }
+
+        .footer {
+            border-top: 1px solid #1a1a22;
+            padding: 32px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #444;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .expertise-grid { grid-template-columns: 1fr; }
+
+            .nav-links { gap: 20px; }
+
+            .contact-link-label { min-width: 60px; }
+
+            .footer {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links { gap: 16px; }
+            .nav-link { font-size: 11px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="#" class="nav-logo">iteniq</a>
+        <div class="nav-links">
+            <a href="#intro" class="nav-link">Intro</a>
+            <a href="#o-mne" class="nav-link">O mne</a>
+            <a href="#kontakt" class="nav-link">Kontakt</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="intro" class="hero">
+        <div class="section-label">
+            <span class="accent-line"></span>
+            IT Consulting, Sourcing &amp; SaaS
+        </div>
+        <h1 class="hero-title">
+            Architektúra, delivery<br>
+            <em>a produkty</em> ktoré<br>
+            fungujú.
+        </h1>
+        <p class="hero-subtitle">
+            Takmer 15 rokov skúseností v IT a bankingu. Od systémovej analýzy cez
+            riadenie transformačných programov až po budovanie vlastných B2B SaaS
+            produktov.
+        </p>
+    </section>
+
+    <!-- O mne -->
+    <section id="o-mne" class="about">
+        <div class="section-label">
+            <span class="accent-line"></span>
+            O mne
+        </div>
+        <h2 class="about-name">Peter Petriska</h2>
+        <p class="about-desc">
+            IT líder so skúsenosťami naprieč celým životným cyklom IT
+            delivery — od analýzy a architektúry cez projektové riadenie až po
+            vedenie obchodnej aj realizačnej divízie a riadenie transformačných
+            programov. Zároveň budujúci vlastné B2B SaaS produkty.
+        </p>
+
+        <div class="expertise-grid">
+            <div class="expertise-card">
+                <h3 class="expertise-title">IT Architektúra &amp; Delivery</h3>
+                <p class="expertise-desc">Komplexné systémy, integrácie, bankové transformácie. Riadenie programov do 30M€+ s globálnymi tímami.</p>
+            </div>
+            <div class="expertise-card">
+                <h3 class="expertise-title">Sourcing &amp; Consulting</h3>
+                <p class="expertise-desc">Skúsenosti z oboch strán — dodávateľ aj klient. Výberové konania, vendor management, solution propositions.</p>
+            </div>
+            <div class="expertise-card">
+                <h3 class="expertise-title">B2B SaaS Development</h3>
+                <p class="expertise-desc">Vlastné produkty od nuly — ideácia, validácia, MVP. AI-driven vývoj, moderný tech stack.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontakt -->
+    <section id="kontakt" class="contact">
+        <div class="section-label">
+            <span class="accent-line"></span>
+            Kontakt
+        </div>
+        <h2 class="contact-heading">Porozprávajme sa.</h2>
+
+        <a class="contact-link" href="mailto:peter@iteniq.eu">
+            <span class="contact-link-label">Email</span>
+            <span class="contact-link-value">peter@iteniq.eu</span>
+            <span class="contact-link-arrow">→</span>
+        </a>
+        <a class="contact-link" href="https://linkedin.com/in/peter-petriska" target="_blank" rel="noopener">
+            <span class="contact-link-label">LinkedIn</span>
+            <span class="contact-link-value">linkedin.com/in/peter-petriska</span>
+            <span class="contact-link-arrow">→</span>
+        </a>
+        <a class="contact-link" href="tel:+421907270515">
+            <span class="contact-link-label">Telefón</span>
+            <span class="contact-link-value">+421 907 270 515</span>
+            <span class="contact-link-arrow">→</span>
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <div class="footer-wrap">
+        <footer class="footer">
+            <span>© 2026 iteniq — Petriska s.r.o.</span>
+            <span>Bratislava, Slovensko</span>
+        </footer>
+    </div>
+
+</body>
+</html>
