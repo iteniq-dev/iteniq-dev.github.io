@@ -196,49 +196,7 @@ body::before {
   line-height: 1.7;
   max-width: 520px;
   font-weight: 300;
-  margin-bottom: 48px;
-}
-
-/* ---------- HERO META (lokacia + status) ---------- */
-.hero-meta {
-  display: flex;
-  gap: 40px;
-  flex-wrap: wrap;
-  padding-top: 32px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  max-width: 520px;
-}
-.hero-meta-item {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.hero-meta-label {
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #666;
-}
-.hero-meta-value {
-  font-size: 14px;
-  color: #ccc;
-  font-weight: 300;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #7ec487;
-  box-shadow: 0 0 0 0 rgba(126, 196, 135, 0.7);
-  animation: pulse 2.5s cubic-bezier(0.66, 0, 0, 1) infinite;
-}
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(126, 196, 135, 0.5); }
-  70% { box-shadow: 0 0 0 8px rgba(126, 196, 135, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(126, 196, 135, 0); }
+  margin-bottom: 0;
 }
 
 /* ---------- ABOUT ---------- */
@@ -289,15 +247,15 @@ body::before {
 }
 .expertise-card:hover { background: #0e0e14; }
 .expertise-card:hover::before { transform: scaleX(1); }
-.expertise-number {
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-size: 14px;
-  color: #c9a96e;
-  margin-bottom: 28px;
+.expertise-mark {
+  width: 18px;
+  height: 18px;
   display: block;
+  margin-bottom: 28px;
   opacity: 0.9;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
+.expertise-card:hover .expertise-mark { transform: rotate(90deg); }
 .expertise-title {
   font-family: 'Instrument Serif', serif;
   font-size: 24px;
@@ -351,7 +309,7 @@ body::before {
 .contact-link:hover .contact-link-label { color: #c9a96e; }
 .contact-link-value {
   font-family: 'Instrument Serif', serif;
-  font-size: clamp(22px, 3.5vw, 36px);
+  font-size: clamp(20px, 2.4vw, 28px);
   font-weight: 400;
   line-height: 1.1;
   transition: color 0.3s ease;
@@ -362,7 +320,7 @@ body::before {
   right: 0;
   top: 50%;
   transform: translateY(-50%) translateX(-8px);
-  font-size: 28px;
+  font-size: 24px;
   opacity: 0;
   color: #c9a96e;
   transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -398,8 +356,7 @@ body::before {
   .nav-logo-mark { width: 22px; height: 22px; }
   .footer { flex-direction: column; gap: 8px; text-align: center; }
   .hero-title { max-width: none; }
-  .hero-meta { gap: 24px; }
-  .contact-link-arrow { font-size: 22px; }
+  .contact-link-arrow { font-size: 20px; }
   .ambient-glow { opacity: 0.6; }
 }
 @media (max-width: 480px) {
@@ -443,16 +400,6 @@ body::before {
     riadenie transforma&#269;n&#253;ch programov a&#382; po budovanie vlastn&#253;ch B2B SaaS
     produktov.
   </p>
-  <div class="hero-meta reveal reveal-delay-3">
-    <div class="hero-meta-item">
-      <span class="hero-meta-label">Based in</span>
-      <span class="hero-meta-value">Bratislava, Slovensko</span>
-    </div>
-    <div class="hero-meta-item">
-      <span class="hero-meta-label">Dostupnosť</span>
-      <span class="hero-meta-value"><span class="status-dot"></span>Otvoren&#233; novinkam</span>
-    </div>
-  </div>
 </section>
 
 <section id="o-mne" class="about">
@@ -469,17 +416,26 @@ body::before {
   </p>
   <div class="expertise-grid reveal reveal-delay-3">
     <div class="expertise-card">
-      <span class="expertise-number">01</span>
+      <svg class="expertise-mark" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="1" y="1" width="16" height="16" fill="none" stroke="#c9a96e" stroke-width="1.2"/>
+        <line x1="1" y1="17" x2="17" y2="1" stroke="#c9a96e" stroke-width="1.2"/>
+      </svg>
       <h3 class="expertise-title">IT Architekt&#250;ra &amp; Delivery</h3>
       <p class="expertise-desc">Komplexn&#233; syst&#233;my, integr&#225;cie, bankov&#233; transform&#225;cie. Riadenie programov do 30M&#8364;+ s glob&#225;lnymi t&#237;mami.</p>
     </div>
     <div class="expertise-card">
-      <span class="expertise-number">02</span>
+      <svg class="expertise-mark" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="1" y="1" width="16" height="16" fill="none" stroke="#c9a96e" stroke-width="1.2"/>
+        <line x1="1" y1="17" x2="17" y2="1" stroke="#c9a96e" stroke-width="1.2"/>
+      </svg>
       <h3 class="expertise-title">Sourcing &amp; Consulting</h3>
       <p class="expertise-desc">Sk&#250;senosti z oboch str&#225;n &#8212; dod&#225;vateľ aj klient. V&#253;berov&#233; konania, vendor management, solution propositions.</p>
     </div>
     <div class="expertise-card">
-      <span class="expertise-number">03</span>
+      <svg class="expertise-mark" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="1" y="1" width="16" height="16" fill="none" stroke="#c9a96e" stroke-width="1.2"/>
+        <line x1="1" y1="17" x2="17" y2="1" stroke="#c9a96e" stroke-width="1.2"/>
+      </svg>
       <h3 class="expertise-title">B2B SaaS Development</h3>
       <p class="expertise-desc">Vlastn&#233; produkty od nuly &#8212; ide&#225;cia, valid&#225;cia, MVP. AI-driven v&#253;voj, modern&#253; tech stack.</p>
     </div>
