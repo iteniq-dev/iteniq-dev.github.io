@@ -18,8 +18,53 @@ body {
   color: #e8e6e1;
   min-height: 100vh;
   overflow-x: hidden;
-  padding-top: 76px; /* kompenzacia za fixed nav */
+  padding-top: 76px;
+  position: relative;
 }
+
+/* ---------- GRAIN TEXTURE (editorial feel) ---------- */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* ---------- AMBIENT GLOW (hero background depth) ---------- */
+.ambient-glow {
+  position: fixed;
+  width: 60vw;
+  height: 60vw;
+  max-width: 900px;
+  max-height: 900px;
+  top: 10%;
+  right: -15%;
+  background: radial-gradient(circle, rgba(201, 169, 110, 0.12) 0%, rgba(201, 169, 110, 0.04) 30%, transparent 60%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ambient-glow-2 {
+  position: fixed;
+  width: 50vw;
+  height: 50vw;
+  max-width: 700px;
+  max-height: 700px;
+  bottom: -20%;
+  left: -10%;
+  background: radial-gradient(circle, rgba(120, 100, 160, 0.08) 0%, transparent 60%);
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ensure content is above ambient layers */
+.nav, section, .footer-wrap { position: relative; z-index: 2; }
 
 /* ---------- NAV (sticky + glass) ---------- */
 .nav {
@@ -45,7 +90,7 @@ body {
   border-bottom-color: rgba(255, 255, 255, 0.06);
 }
 
-/* ---------- LOGO (mark + wordmark) ---------- */
+/* ---------- LOGO ---------- */
 .nav-logo {
   display: flex;
   align-items: center;
@@ -58,7 +103,9 @@ body {
   height: 28px;
   flex-shrink: 0;
   display: block;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
+.nav-logo:hover .nav-logo-mark { transform: rotate(90deg); }
 .nav-logo-text {
   font-family: 'Instrument Serif', serif;
   font-size: 28px;
@@ -80,9 +127,22 @@ body {
   text-transform: uppercase;
   transition: color 0.3s ease;
   font-family: 'DM Sans', sans-serif;
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #c9a96e;
+  transition: width 0.3s ease;
 }
 .nav-link:hover { color: #e8e6e1; }
+.nav-link:hover::after { width: 100%; }
 
+/* ---------- SECTION LABEL ---------- */
 .accent-line {
   width: 40px; height: 1px;
   background: #c9a96e;
@@ -90,7 +150,6 @@ body {
   margin-right: 12px;
   vertical-align: middle;
 }
-
 .section-label {
   font-size: 11px;
   letter-spacing: 0.15em;
@@ -99,7 +158,25 @@ body {
   margin-bottom: 32px;
 }
 
-/* ---------- HERO (wider + no forced breaks) ---------- */
+/* ---------- SCROLL REVEAL ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .nav-logo-mark { transition: none; }
+  .ambient-glow { transition: none; }
+}
+
+/* ---------- HERO ---------- */
 .hero {
   padding: clamp(48px, 8vw, 96px) clamp(24px, 5vw, 80px) clamp(60px, 10vw, 120px);
   max-width: 1400px;
@@ -110,7 +187,7 @@ body {
   font-weight: 400;
   line-height: 1.1;
   margin-bottom: 32px;
-  max-width: 26ch; /* prirodzene 2 riadky na desktope, viac na mobile */
+  max-width: 26ch;
 }
 .hero-title em { font-style: italic; color: #c9a96e; }
 .hero-subtitle {
@@ -119,8 +196,52 @@ body {
   line-height: 1.7;
   max-width: 520px;
   font-weight: 300;
+  margin-bottom: 48px;
 }
 
+/* ---------- HERO META (lokacia + status) ---------- */
+.hero-meta {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  max-width: 520px;
+}
+.hero-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.hero-meta-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #666;
+}
+.hero-meta-value {
+  font-size: 14px;
+  color: #ccc;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #7ec487;
+  box-shadow: 0 0 0 0 rgba(126, 196, 135, 0.7);
+  animation: pulse 2.5s cubic-bezier(0.66, 0, 0, 1) infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(126, 196, 135, 0.5); }
+  70% { box-shadow: 0 0 0 8px rgba(126, 196, 135, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(126, 196, 135, 0); }
+}
+
+/* ---------- ABOUT ---------- */
 .about {
   padding: clamp(60px, 10vw, 120px) clamp(24px, 5vw, 80px);
   max-width: 1400px;
@@ -137,19 +258,20 @@ body {
   color: #999;
   line-height: 1.8;
   max-width: 650px;
-  margin-bottom: 48px;
+  margin-bottom: 64px;
   font-weight: 300;
 }
+
+/* ---------- EXPERTISE CARDS ---------- */
 .expertise-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1px;
-  background: #1a1a22;
+  background: rgba(255, 255, 255, 0.06);
 }
 .expertise-card {
   background: #0a0a0f;
-  border: 1px solid #1a1a22;
-  padding: 32px;
+  padding: 40px 32px 32px;
   transition: all 0.4s ease;
   cursor: default;
   position: relative;
@@ -165,88 +287,133 @@ body {
   transform-origin: left;
   transition: transform 0.4s ease;
 }
-.expertise-card:hover { border-color: #2a2a32; background: #0e0e14; }
+.expertise-card:hover { background: #0e0e14; }
 .expertise-card:hover::before { transform: scaleX(1); }
+.expertise-number {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: #c9a96e;
+  margin-bottom: 28px;
+  display: block;
+  opacity: 0.9;
+}
 .expertise-title {
   font-family: 'Instrument Serif', serif;
-  font-size: 22px;
-  margin-bottom: 12px;
+  font-size: 24px;
+  margin-bottom: 14px;
+  line-height: 1.2;
 }
 .expertise-desc {
   font-size: 14px;
-  color: #777;
+  color: #888;
   line-height: 1.7;
   font-weight: 300;
 }
 
+/* ---------- CONTACT (variant B: label above, value big) ---------- */
 .contact {
   padding: clamp(60px, 10vw, 120px) clamp(24px, 5vw, 80px);
   max-width: 1400px;
 }
 .contact-heading {
   font-family: 'Instrument Serif', serif;
-  font-size: clamp(28px, 4vw, 42px);
+  font-size: clamp(32px, 5vw, 56px);
   font-weight: 400;
-  margin-bottom: 48px;
-  line-height: 1.2;
+  margin-bottom: 64px;
+  line-height: 1.1;
+  max-width: 18ch;
 }
+.contact-heading em { font-style: italic; color: #c9a96e; }
+
+.contact-list { max-width: 900px; }
 .contact-link {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 24px 0;
-  border-bottom: 1px solid #1a1a22;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 32px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   text-decoration: none;
   color: #e8e6e1;
-  transition: all 0.3s ease;
+  transition: padding 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  gap: 12px;
 }
-.contact-link:hover { padding-left: 12px; color: #c9a96e; }
+.contact-link:first-child { border-top: 1px solid rgba(255, 255, 255, 0.06); }
+.contact-link:hover { padding-left: 16px; }
 .contact-link-label {
-  font-size: 13px;
-  color: #555;
+  font-size: 11px;
+  color: #787878;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  min-width: 80px;
+  letter-spacing: 0.15em;
+  transition: color 0.3s ease;
 }
-.contact-link-value { font-size: 16px; font-weight: 300; }
+.contact-link:hover .contact-link-label { color: #c9a96e; }
+.contact-link-value {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(22px, 3.5vw, 36px);
+  font-weight: 400;
+  line-height: 1.1;
+  transition: color 0.3s ease;
+}
+.contact-link:hover .contact-link-value { color: #c9a96e; }
 .contact-link-arrow {
-  font-size: 18px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%) translateX(-8px);
+  font-size: 28px;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  color: #c9a96e;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  font-family: 'Instrument Serif', serif;
 }
-.contact-link:hover .contact-link-arrow { opacity: 1; }
+.contact-link:hover .contact-link-arrow {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
 
+/* ---------- FOOTER ---------- */
 .footer-wrap {
   padding: 0 clamp(24px, 5vw, 80px);
   max-width: 1400px;
 }
 .footer {
-  border-top: 1px solid #1a1a22;
-  padding: 32px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 40px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 12px;
-  color: #444;
+  color: #555;
+  letter-spacing: 0.05em;
 }
 
+/* ---------- RESPONSIVE ---------- */
 @media (max-width: 768px) {
   body { padding-top: 64px; }
   .expertise-grid { grid-template-columns: 1fr; }
   .nav-links { gap: 20px; }
   .nav-logo-text { font-size: 22px; }
   .nav-logo-mark { width: 22px; height: 22px; }
-  .contact-link-label { min-width: 60px; }
   .footer { flex-direction: column; gap: 8px; text-align: center; }
-  .hero-title { max-width: none; } /* na mobile nech tecie prirodzene */
+  .hero-title { max-width: none; }
+  .hero-meta { gap: 24px; }
+  .contact-link-arrow { font-size: 22px; }
+  .ambient-glow { opacity: 0.6; }
 }
 @media (max-width: 480px) {
   .nav-links { gap: 16px; }
   .nav-link { font-size: 11px; }
+  .contact-link { padding: 24px 0; }
+  .contact-link:hover { padding-left: 8px; }
 }
 </style>
 </head>
 <body>
+
+<div class="ambient-glow" id="ambient-glow"></div>
+<div class="ambient-glow-2"></div>
 
 <nav class="nav" id="nav">
   <a href="#" class="nav-logo" aria-label="iteniq homepage">
@@ -264,42 +431,55 @@ body {
 </nav>
 
 <section id="intro" class="hero">
-  <div class="section-label">
+  <div class="section-label reveal">
     <span class="accent-line"></span>
     IT Consulting, Sourcing &amp; SaaS
   </div>
-  <h1 class="hero-title">
+  <h1 class="hero-title reveal reveal-delay-1">
     Architekt&#250;ra, delivery <em>a produkty</em> ktor&#233; funguj&#250;.
   </h1>
-  <p class="hero-subtitle">
+  <p class="hero-subtitle reveal reveal-delay-2">
     Takmer 15 rokov sk&#250;senost&#237; v IT a bankingu. Od syst&#233;movej anal&#253;zy cez
     riadenie transforma&#269;n&#253;ch programov a&#382; po budovanie vlastn&#253;ch B2B SaaS
     produktov.
   </p>
+  <div class="hero-meta reveal reveal-delay-3">
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Based in</span>
+      <span class="hero-meta-value">Bratislava, Slovensko</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Dostupnosť</span>
+      <span class="hero-meta-value"><span class="status-dot"></span>Otvoren&#233; novinkam</span>
+    </div>
+  </div>
 </section>
 
 <section id="o-mne" class="about">
-  <div class="section-label">
+  <div class="section-label reveal">
     <span class="accent-line"></span>
     O mne
   </div>
-  <h2 class="about-name">Peter Petriska</h2>
-  <p class="about-desc">
+  <h2 class="about-name reveal reveal-delay-1">Peter Petriska</h2>
+  <p class="about-desc reveal reveal-delay-2">
     IT l&#237;der so sk&#250;senosťami naprieč cel&#253;m &#382;ivotn&#253;m cyklom IT
     delivery &#8212; od anal&#253;zy a architekt&#250;ry cez projektov&#233; riadenie a&#382; po
     vedenie obchodnej aj realiza&#269;nej div&#237;zie a riadenie transforma&#269;n&#253;ch
     programov. Z&#225;roveň buduj&#250;ci vlastn&#233; B2B SaaS produkty.
   </p>
-  <div class="expertise-grid">
+  <div class="expertise-grid reveal reveal-delay-3">
     <div class="expertise-card">
+      <span class="expertise-number">01</span>
       <h3 class="expertise-title">IT Architekt&#250;ra &amp; Delivery</h3>
       <p class="expertise-desc">Komplexn&#233; syst&#233;my, integr&#225;cie, bankov&#233; transform&#225;cie. Riadenie programov do 30M&#8364;+ s glob&#225;lnymi t&#237;mami.</p>
     </div>
     <div class="expertise-card">
+      <span class="expertise-number">02</span>
       <h3 class="expertise-title">Sourcing &amp; Consulting</h3>
       <p class="expertise-desc">Sk&#250;senosti z oboch str&#225;n &#8212; dod&#225;vateľ aj klient. V&#253;berov&#233; konania, vendor management, solution propositions.</p>
     </div>
     <div class="expertise-card">
+      <span class="expertise-number">03</span>
       <h3 class="expertise-title">B2B SaaS Development</h3>
       <p class="expertise-desc">Vlastn&#233; produkty od nuly &#8212; ide&#225;cia, valid&#225;cia, MVP. AI-driven v&#253;voj, modern&#253; tech stack.</p>
     </div>
@@ -307,26 +487,30 @@ body {
 </section>
 
 <section id="kontakt" class="contact">
-  <div class="section-label">
+  <div class="section-label reveal">
     <span class="accent-line"></span>
     Kontakt
   </div>
-  <h2 class="contact-heading">Porozpr&#225;vajme sa.</h2>
-  <a class="contact-link" id="email-link" href="#">
-    <span class="contact-link-label">Email</span>
-    <span class="contact-link-value" id="email-value"></span>
-    <span class="contact-link-arrow">&#8594;</span>
-  </a>
-  <a class="contact-link" href="https://linkedin.com/in/peter-petriska" target="_blank" rel="noopener">
-    <span class="contact-link-label">LinkedIn</span>
-    <span class="contact-link-value">linkedin.com/in/peter-petriska</span>
-    <span class="contact-link-arrow">&#8594;</span>
-  </a>
-  <a class="contact-link" href="tel:+421907270515">
-    <span class="contact-link-label">Telef&#243;n</span>
-    <span class="contact-link-value">+421 907 270 515</span>
-    <span class="contact-link-arrow">&#8594;</span>
-  </a>
+  <h2 class="contact-heading reveal reveal-delay-1">
+    Porozpr&#225;vajme <em>sa</em>.
+  </h2>
+  <div class="contact-list reveal reveal-delay-2">
+    <a class="contact-link" id="email-link" href="#">
+      <span class="contact-link-label">Email</span>
+      <span class="contact-link-value" id="email-value"></span>
+      <span class="contact-link-arrow">&#8594;</span>
+    </a>
+    <a class="contact-link" href="https://linkedin.com/in/peter-petriska" target="_blank" rel="noopener">
+      <span class="contact-link-label">LinkedIn</span>
+      <span class="contact-link-value">linkedin.com/in/peter-petriska</span>
+      <span class="contact-link-arrow">&#8594;</span>
+    </a>
+    <a class="contact-link" href="tel:+421907270515">
+      <span class="contact-link-label">Telef&#243;n</span>
+      <span class="contact-link-value">+421 907 270 515</span>
+      <span class="contact-link-arrow">&#8594;</span>
+    </a>
+  </div>
 </section>
 
 <div class="footer-wrap">
@@ -337,13 +521,14 @@ body {
 </div>
 
 <script>
+// Email obfuscation
 (function(){
   var u='peter',d='iteniq.eu',e=u+'@'+d;
   document.getElementById('email-link').href='mai'+'lto:'+e;
   document.getElementById('email-value').textContent=e;
 })();
 
-// nav scroll state - menu sa zmensi ked scrollujes
+// Nav scroll state
 (function(){
   var nav = document.getElementById('nav');
   var ticking = false;
@@ -358,6 +543,43 @@ body {
       ticking = true;
     }
   }, { passive: true });
+})();
+
+// Scroll reveal
+(function(){
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
+    return;
+  }
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
+})();
+
+// Ambient glow mouse follow
+(function(){
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia && window.matchMedia('(hover: none)').matches) return;
+  var glow = document.getElementById('ambient-glow');
+  if (!glow) return;
+  var targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+  window.addEventListener('mousemove', function(e){
+    targetX = (e.clientX / window.innerWidth - 0.5) * 60;
+    targetY = (e.clientY / window.innerHeight - 0.5) * 60;
+  }, { passive: true });
+  function animate() {
+    currentX += (targetX - currentX) * 0.05;
+    currentY += (targetY - currentY) * 0.05;
+    glow.style.transform = 'translate(' + currentX + 'px, ' + currentY + 'px)';
+    requestAnimationFrame(animate);
+  }
+  animate();
 })();
 </script>
 
