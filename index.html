@@ -1,302 +1,365 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iteniq &#8212; IT Consulting, Sourcing &amp; SaaS</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta name="description" content="Peter Petriska - IT lider, consulting, sourcing a B2B SaaS produkty. Bratislava, Slovensko.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: #0a0a0f;
-            color: #e8e6e1;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iteniq &#8212; IT Consulting, Sourcing &amp; SaaS</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="description" content="Peter Petriska - IT lider, consulting, sourcing a B2B SaaS produkty. Bratislava, Slovensko.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #0a0a0f;
+  color: #e8e6e1;
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-top: 76px; /* kompenzacia za fixed nav */
+}
 
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 28px clamp(24px, 5vw, 80px);
-            border-bottom: 1px solid #1a1a22;
-        }
-        .nav-logo {
-            font-family: 'Instrument Serif', serif;
-            font-size: 22px;
-            letter-spacing: 0.02em;
-            color: #e8e6e1;
-            text-decoration: none;
-        }
-        .nav-links { display: flex; gap: 32px; }
-        .nav-link {
-            color: #787878;
-            text-decoration: none;
-            font-size: 13px;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            transition: color 0.3s ease;
-            font-family: 'DM Sans', sans-serif;
-        }
-        .nav-link:hover { color: #e8e6e1; }
+/* ---------- NAV (sticky + glass) ---------- */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px clamp(24px, 5vw, 80px);
+  background: rgba(10, 10, 15, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: padding 0.3s ease, background 0.3s ease;
+}
+.nav.scrolled {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  background: rgba(10, 10, 15, 0.88);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
 
-        .accent-line {
-            width: 40px; height: 1px;
-            background: #c9a96e;
-            display: inline-block;
-            margin-right: 12px;
-            vertical-align: middle;
-        }
-        .section-label {
-            font-size: 11px;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: #787878;
-            margin-bottom: 32px;
-        }
+/* ---------- LOGO (mark + wordmark) ---------- */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #e8e6e1;
+}
+.nav-logo-mark {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: block;
+}
+.nav-logo-text {
+  font-family: 'Instrument Serif', serif;
+  font-size: 28px;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  font-weight: 400;
+}
+.nav-logo-text .accent {
+  color: #c9a96e;
+  font-style: italic;
+}
 
-        .hero {
-            padding: clamp(60px, 12vw, 140px) clamp(24px, 5vw, 80px);
-            max-width: 1100px;
-        }
-        .hero-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(36px, 7vw, 72px);
-            font-weight: 400;
-            line-height: 1.1;
-            margin-bottom: 32px;
-        }
-        .hero-title em { font-style: italic; color: #c9a96e; }
-        .hero-subtitle {
-            font-size: clamp(15px, 2vw, 18px);
-            color: #999;
-            line-height: 1.7;
-            max-width: 520px;
-            font-weight: 300;
-        }
+.nav-links { display: flex; gap: 32px; }
+.nav-link {
+  color: #9a9a9a;
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+  font-family: 'DM Sans', sans-serif;
+}
+.nav-link:hover { color: #e8e6e1; }
 
-        .about {
-            padding: clamp(60px, 10vw, 120px) clamp(24px, 5vw, 80px);
-            max-width: 1100px;
-        }
-        .about-name {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(28px, 4vw, 42px);
-            font-weight: 400;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-        .about-desc {
-            font-size: 15px;
-            color: #999;
-            line-height: 1.8;
-            max-width: 650px;
-            margin-bottom: 48px;
-            font-weight: 300;
-        }
+.accent-line {
+  width: 40px; height: 1px;
+  background: #c9a96e;
+  display: inline-block;
+  margin-right: 12px;
+  vertical-align: middle;
+}
 
-        .expertise-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1px;
-            background: #1a1a22;
-        }
-        .expertise-card {
-            background: #0a0a0f;
-            border: 1px solid #1a1a22;
-            padding: 32px;
-            transition: all 0.4s ease;
-            cursor: default;
-            position: relative;
-            overflow: hidden;
-        }
-        .expertise-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 2px;
-            background: linear-gradient(90deg, #c9a96e, transparent);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
-        }
-        .expertise-card:hover { border-color: #2a2a32; background: #0e0e14; }
-        .expertise-card:hover::before { transform: scaleX(1); }
-        .expertise-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: 22px;
-            margin-bottom: 12px;
-        }
-        .expertise-desc {
-            font-size: 14px;
-            color: #777;
-            line-height: 1.7;
-            font-weight: 300;
-        }
+.section-label {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #787878;
+  margin-bottom: 32px;
+}
 
-        .contact {
-            padding: clamp(60px, 10vw, 120px) clamp(24px, 5vw, 80px);
-            max-width: 1100px;
-        }
-        .contact-heading {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(28px, 4vw, 42px);
-            font-weight: 400;
-            margin-bottom: 48px;
-            line-height: 1.2;
-        }
-        .contact-link {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 24px 0;
-            border-bottom: 1px solid #1a1a22;
-            text-decoration: none;
-            color: #e8e6e1;
-            transition: all 0.3s ease;
-        }
-        .contact-link:hover { padding-left: 12px; color: #c9a96e; }
-        .contact-link-label {
-            font-size: 13px;
-            color: #555;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            min-width: 80px;
-        }
-        .contact-link-value { font-size: 16px; font-weight: 300; }
-        .contact-link-arrow {
-            font-size: 18px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .contact-link:hover .contact-link-arrow { opacity: 1; }
+/* ---------- HERO (wider + no forced breaks) ---------- */
+.hero {
+  padding: clamp(48px, 8vw, 96px) clamp(24px, 5vw, 80px) clamp(60px, 10vw, 120px);
+  max-width: 1400px;
+}
+.hero-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(36px, 7vw, 72px);
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: 32px;
+  max-width: 18ch; /* prirodzene 2 riadky na desktope, viac na mobile */
+}
+.hero-title em { font-style: italic; color: #c9a96e; }
+.hero-subtitle {
+  font-size: clamp(15px, 2vw, 18px);
+  color: #999;
+  line-height: 1.7;
+  max-width: 520px;
+  font-weight: 300;
+}
 
-        .footer-wrap {
-            padding: 0 clamp(24px, 5vw, 80px);
-            max-width: 1100px;
-        }
-        .footer {
-            border-top: 1px solid #1a1a22;
-            padding: 32px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-            color: #444;
-        }
+.about {
+  padding: clamp(60px, 10vw, 120px) clamp(24px, 5vw, 80px);
+  max-width: 1400px;
+}
+.about-name {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 400;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+.about-desc {
+  font-size: 15px;
+  color: #999;
+  line-height: 1.8;
+  max-width: 650px;
+  margin-bottom: 48px;
+  font-weight: 300;
+}
+.expertise-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1px;
+  background: #1a1a22;
+}
+.expertise-card {
+  background: #0a0a0f;
+  border: 1px solid #1a1a22;
+  padding: 32px;
+  transition: all 0.4s ease;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+.expertise-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, #c9a96e, transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.expertise-card:hover { border-color: #2a2a32; background: #0e0e14; }
+.expertise-card:hover::before { transform: scaleX(1); }
+.expertise-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+.expertise-desc {
+  font-size: 14px;
+  color: #777;
+  line-height: 1.7;
+  font-weight: 300;
+}
 
-        @media (max-width: 768px) {
-            .expertise-grid { grid-template-columns: 1fr; }
-            .nav-links { gap: 20px; }
-            .contact-link-label { min-width: 60px; }
-            .footer { flex-direction: column; gap: 8px; text-align: center; }
-        }
-        @media (max-width: 480px) {
-            .nav-links { gap: 16px; }
-            .nav-link { font-size: 11px; }
-        }
-    </style>
+.contact {
+  padding: clamp(60px, 10vw, 120px) clamp(24px, 5vw, 80px);
+  max-width: 1400px;
+}
+.contact-heading {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 400;
+  margin-bottom: 48px;
+  line-height: 1.2;
+}
+.contact-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 0;
+  border-bottom: 1px solid #1a1a22;
+  text-decoration: none;
+  color: #e8e6e1;
+  transition: all 0.3s ease;
+}
+.contact-link:hover { padding-left: 12px; color: #c9a96e; }
+.contact-link-label {
+  font-size: 13px;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  min-width: 80px;
+}
+.contact-link-value { font-size: 16px; font-weight: 300; }
+.contact-link-arrow {
+  font-size: 18px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.contact-link:hover .contact-link-arrow { opacity: 1; }
+
+.footer-wrap {
+  padding: 0 clamp(24px, 5vw, 80px);
+  max-width: 1400px;
+}
+.footer {
+  border-top: 1px solid #1a1a22;
+  padding: 32px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #444;
+}
+
+@media (max-width: 768px) {
+  body { padding-top: 64px; }
+  .expertise-grid { grid-template-columns: 1fr; }
+  .nav-links { gap: 20px; }
+  .nav-logo-text { font-size: 22px; }
+  .nav-logo-mark { width: 22px; height: 22px; }
+  .contact-link-label { min-width: 60px; }
+  .footer { flex-direction: column; gap: 8px; text-align: center; }
+  .hero-title { max-width: none; } /* na mobile nech tecie prirodzene */
+}
+@media (max-width: 480px) {
+  .nav-links { gap: 16px; }
+  .nav-link { font-size: 11px; }
+}
+</style>
 </head>
 <body>
 
-    <nav class="nav">
-        <a href="#" class="nav-logo">iteniq</a>
-        <div class="nav-links">
-            <a href="#intro" class="nav-link">Intro</a>
-            <a href="#o-mne" class="nav-link">O mne</a>
-            <a href="#kontakt" class="nav-link">Kontakt</a>
-        </div>
-    </nav>
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo" aria-label="iteniq homepage">
+    <svg class="nav-logo-mark" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="2" y="2" width="24" height="24" fill="none" stroke="#c9a96e" stroke-width="1.5"/>
+      <line x1="2" y1="26" x2="26" y2="2" stroke="#c9a96e" stroke-width="1.5"/>
+    </svg>
+    <span class="nav-logo-text">iten<span class="accent">iq</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="#intro" class="nav-link">Intro</a>
+    <a href="#o-mne" class="nav-link">O mne</a>
+    <a href="#kontakt" class="nav-link">Kontakt</a>
+  </div>
+</nav>
 
-    <section id="intro" class="hero">
-        <div class="section-label">
-            <span class="accent-line"></span>
-            IT Consulting, Sourcing &amp; SaaS
-        </div>
-        <h1 class="hero-title">
-            Architekt&#250;ra, delivery<br>
-            <em>a produkty</em> ktor&#233;<br>
-            funguj&#250;.
-        </h1>
-        <p class="hero-subtitle">
-            Takmer 15 rokov sk&#250;senost&#237; v IT a bankingu. Od syst&#233;movej anal&#253;zy cez
-            riadenie transforma&#269;n&#253;ch programov a&#382; po budovanie vlastn&#253;ch B2B SaaS
-            produktov.
-        </p>
-    </section>
+<section id="intro" class="hero">
+  <div class="section-label">
+    <span class="accent-line"></span>
+    IT Consulting, Sourcing &amp; SaaS
+  </div>
+  <h1 class="hero-title">
+    Architekt&#250;ra, delivery <em>a produkty</em> ktor&#233; funguj&#250;.
+  </h1>
+  <p class="hero-subtitle">
+    Takmer 15 rokov sk&#250;senost&#237; v IT a bankingu. Od syst&#233;movej anal&#253;zy cez
+    riadenie transforma&#269;n&#253;ch programov a&#382; po budovanie vlastn&#253;ch B2B SaaS
+    produktov.
+  </p>
+</section>
 
-    <section id="o-mne" class="about">
-        <div class="section-label">
-            <span class="accent-line"></span>
-            O mne
-        </div>
-        <h2 class="about-name">Peter Petriska</h2>
-        <p class="about-desc">
-            IT l&#237;der so sk&#250;senosťami naprieč cel&#253;m &#382;ivotn&#253;m cyklom IT
-            delivery &#8212; od anal&#253;zy a architekt&#250;ry cez projektov&#233; riadenie a&#382; po
-            vedenie obchodnej aj realiza&#269;nej div&#237;zie a riadenie transforma&#269;n&#253;ch
-            programov. Z&#225;roveň buduj&#250;ci vlastn&#233; B2B SaaS produkty.
-        </p>
-        <div class="expertise-grid">
-            <div class="expertise-card">
-                <h3 class="expertise-title">IT Architekt&#250;ra &amp; Delivery</h3>
-                <p class="expertise-desc">Komplexn&#233; syst&#233;my, integr&#225;cie, bankov&#233; transform&#225;cie. Riadenie programov do 30M&#8364;+ s glob&#225;lnymi t&#237;mami.</p>
-            </div>
-            <div class="expertise-card">
-                <h3 class="expertise-title">Sourcing &amp; Consulting</h3>
-                <p class="expertise-desc">Sk&#250;senosti z oboch str&#225;n &#8212; dod&#225;vateľ aj klient. V&#253;berov&#233; konania, vendor management, solution propositions.</p>
-            </div>
-            <div class="expertise-card">
-                <h3 class="expertise-title">B2B SaaS Development</h3>
-                <p class="expertise-desc">Vlastn&#233; produkty od nuly &#8212; ide&#225;cia, valid&#225;cia, MVP. AI-driven v&#253;voj, modern&#253; tech stack.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="kontakt" class="contact">
-        <div class="section-label">
-            <span class="accent-line"></span>
-            Kontakt
-        </div>
-        <h2 class="contact-heading">Porozpr&#225;vajme sa.</h2>
-
-        <a class="contact-link" id="email-link" href="#">
-            <span class="contact-link-label">Email</span>
-            <span class="contact-link-value" id="email-value"></span>
-            <span class="contact-link-arrow">&#8594;</span>
-        </a>
-        <a class="contact-link" href="https://linkedin.com/in/peter-petriska" target="_blank" rel="noopener">
-            <span class="contact-link-label">LinkedIn</span>
-            <span class="contact-link-value">linkedin.com/in/peter-petriska</span>
-            <span class="contact-link-arrow">&#8594;</span>
-        </a>
-        <a class="contact-link" href="tel:+421907270515">
-            <span class="contact-link-label">Telef&#243;n</span>
-            <span class="contact-link-value">+421 907 270 515</span>
-            <span class="contact-link-arrow">&#8594;</span>
-        </a>
-    </section>
-
-    <div class="footer-wrap">
-        <footer class="footer">
-            <span>&#169; 2026 iteniq &#8212; Petriska s.r.o.</span>
-            <span>Bratislava, Slovensko</span>
-        </footer>
+<section id="o-mne" class="about">
+  <div class="section-label">
+    <span class="accent-line"></span>
+    O mne
+  </div>
+  <h2 class="about-name">Peter Petriska</h2>
+  <p class="about-desc">
+    IT l&#237;der so sk&#250;senosťami naprieč cel&#253;m &#382;ivotn&#253;m cyklom IT
+    delivery &#8212; od anal&#253;zy a architekt&#250;ry cez projektov&#233; riadenie a&#382; po
+    vedenie obchodnej aj realiza&#269;nej div&#237;zie a riadenie transforma&#269;n&#253;ch
+    programov. Z&#225;roveň buduj&#250;ci vlastn&#233; B2B SaaS produkty.
+  </p>
+  <div class="expertise-grid">
+    <div class="expertise-card">
+      <h3 class="expertise-title">IT Architekt&#250;ra &amp; Delivery</h3>
+      <p class="expertise-desc">Komplexn&#233; syst&#233;my, integr&#225;cie, bankov&#233; transform&#225;cie. Riadenie programov do 30M&#8364;+ s glob&#225;lnymi t&#237;mami.</p>
     </div>
+    <div class="expertise-card">
+      <h3 class="expertise-title">Sourcing &amp; Consulting</h3>
+      <p class="expertise-desc">Sk&#250;senosti z oboch str&#225;n &#8212; dod&#225;vateľ aj klient. V&#253;berov&#233; konania, vendor management, solution propositions.</p>
+    </div>
+    <div class="expertise-card">
+      <h3 class="expertise-title">B2B SaaS Development</h3>
+      <p class="expertise-desc">Vlastn&#233; produkty od nuly &#8212; ide&#225;cia, valid&#225;cia, MVP. AI-driven v&#253;voj, modern&#253; tech stack.</p>
+    </div>
+  </div>
+</section>
 
-    <script>
-        (function(){
-            var u='peter',d='iteniq.eu',e=u+'@'+d;
-            document.getElementById('email-link').href='mai'+'lto:'+e;
-            document.getElementById('email-value').textContent=e;
-        })();
-    </script>
+<section id="kontakt" class="contact">
+  <div class="section-label">
+    <span class="accent-line"></span>
+    Kontakt
+  </div>
+  <h2 class="contact-heading">Porozpr&#225;vajme sa.</h2>
+  <a class="contact-link" id="email-link" href="#">
+    <span class="contact-link-label">Email</span>
+    <span class="contact-link-value" id="email-value"></span>
+    <span class="contact-link-arrow">&#8594;</span>
+  </a>
+  <a class="contact-link" href="https://linkedin.com/in/peter-petriska" target="_blank" rel="noopener">
+    <span class="contact-link-label">LinkedIn</span>
+    <span class="contact-link-value">linkedin.com/in/peter-petriska</span>
+    <span class="contact-link-arrow">&#8594;</span>
+  </a>
+  <a class="contact-link" href="tel:+421907270515">
+    <span class="contact-link-label">Telef&#243;n</span>
+    <span class="contact-link-value">+421 907 270 515</span>
+    <span class="contact-link-arrow">&#8594;</span>
+  </a>
+</section>
+
+<div class="footer-wrap">
+  <footer class="footer">
+    <span>&#169; 2026 iteniq &#8212; Petriska s.r.o.</span>
+    <span>Bratislava, Slovensko</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var u='peter',d='iteniq.eu',e=u+'@'+d;
+  document.getElementById('email-link').href='mai'+'lto:'+e;
+  document.getElementById('email-value').textContent=e;
+})();
+
+// nav scroll state - menu sa zmensi ked scrollujes
+(function(){
+  var nav = document.getElementById('nav');
+  var ticking = false;
+  function update() {
+    if (window.scrollY > 20) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if (!ticking) {
+      window.requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive: true });
+})();
+</script>
 
 </body>
 </html>
